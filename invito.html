@@ -14,7 +14,7 @@
             background: linear-gradient(135deg, #1a472a, #2d5a4d);
             font-family: 'Arial', sans-serif;
             color: white;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         .container {
@@ -28,37 +28,43 @@
             margin: 1rem;
         }
 
-        .super-secret-santa {
+        .super-secret-santa-section {
+            margin: 1rem 0;
             background: #ff4444;
             color: white;
-            padding: 1.5rem;
             border-radius: 15px;
-            margin: 1rem 0;
-            text-align: center;
+            padding: 1.5rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .super-secret-santa:hover {
+        .super-secret-santa-section:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
 
-        .super-secret-santa h2 {
-            margin: 0 0 0.5rem;
+        .super-secret-santa-section h2 {
             font-size: 1.8rem;
+            margin: 0 0 0.5rem;
         }
 
-        .super-secret-santa p {
+        .super-secret-santa-section p {
             font-size: 1rem;
-            margin-bottom: 0;
+            margin: 0;
         }
 
         h1 {
             font-size: 2rem;
             margin-bottom: 1rem;
             color: #ff4444;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .details {
+            font-size: 1rem;
+            margin: 1.5rem 0;
+            line-height: 1.4;
         }
 
         .rsvp-button {
@@ -79,12 +85,6 @@
 
         #no-button {
             position: relative;
-        }
-
-        .details {
-            font-size: 1rem;
-            margin: 1.5rem 0;
-            line-height: 1.4;
         }
 
         .gift {
@@ -112,15 +112,15 @@
                 font-size: 1.8rem;
             }
 
-            .super-secret-santa {
+            .super-secret-santa-section {
                 padding: 1rem;
             }
 
-            .super-secret-santa h2 {
+            .super-secret-santa-section h2 {
                 font-size: 1.5rem;
             }
 
-            .super-secret-santa p {
+            .super-secret-santa-section p {
                 font-size: 0.9rem;
             }
 
@@ -137,24 +137,27 @@
 </head>
 <body>
     <div class="container">
+        <!-- Sezione Super Secret Santa -->
+        <div class="super-secret-santa-section" onclick="startGiftCascade()">
+            <h2>🎁 Super Secret Santa 🎁</h2>
+            <p>
+                Porta un regalo a tua scelta senza destinatario! Durante la festa, ogni partecipante sceglierà casualmente un pacco (non il proprio) per scoprire la sorpresa.
+            </p>
+        </div>
+
+        <!-- Intestazione principale -->
         <div class="santa">🎅</div>
         <h1>Ho Ho Ho!</h1>
         <div class="details">
-            <p>Sei invitato alla festa di Natale più ptchh dell'anno!</p>
+            <p>Sei invitato alla festa di Natale più divertente dell'anno!</p>
             <p>🎄 7 Dicembre 2024 - Ore 12:30 🎄</p>
             <p>🏠 Casa Basile - Via privata Sanremo, 10 🏠</p>
             <p>Ci saranno: 
                 <br>🍷 Bevande festive
-                <br>🍪 Tanto cibo natalizio
+                <br>🍪 Biscotti di Natale
                 <br>🎁 Scambio regali
-                <br>🃏 Giocata a carte
+                <br>🎵 Karaoke natalizio
             </p>
-        </div>
-
-        <!-- Super Secret Santa -->
-        <div class="super-secret-santa" onclick="startGiftCascade()">
-            <h2>🎁 Super Secret Santa 🎁</h2>
-            <p>Porta un regalo a tua scelta senza destinatario! Durante la festa, ogni partecipante sceglierà casualmente un pacco (non il proprio) per scoprire la sorpresa.</p>
         </div>
 
         <!-- RSVP Buttons -->
@@ -163,9 +166,9 @@
     </div>
 
     <script>
-        // Reindirizzamento
+        // Reindirizzamento al tuo link Google Sheets
         function redirect() {
-            window.location.href = "https://example.com"; // Cambia con il tuo link
+            window.location.href = "https://docs.google.com/spreadsheets/d/1sUAcAY_VpcL6D2YJAzBhjAlNt88wfJaLSTurHUkzP7Q/edit?gid=0#gid=0";
         }
 
         // Sposta il pulsante "No"
@@ -177,15 +180,21 @@
 
         // Cascata di regali con spegnimento
         let giftInterval;
+        let isCascading = false;
+
         function startGiftCascade() {
+            if (isCascading) return; // Evita che venga avviata di nuovo se già attiva
+            isCascading = true;
+
             const numGifts = 100;
             let count = 0;
 
             giftInterval = setInterval(() => {
                 if (count >= numGifts) {
-                    clearInterval(giftInterval); // Ferma la cascata dopo aver raggiunto il limite
+                    stopGiftCascade();
                     return;
                 }
+
                 const gift = document.createElement('div');
                 gift.className = 'gift';
                 gift.style.left = Math.random() * 100 + 'vw';
@@ -199,12 +208,12 @@
                 });
 
                 count++;
-            }, 30); // Crea un regalo ogni 30ms
+            }, 50); // Crea un regalo ogni 50ms
+        }
 
-            // Ferma la cascata dopo 5 secondi
-            setTimeout(() => {
-                clearInterval(giftInterval);
-            }, 5000);
+        function stopGiftCascade() {
+            clearInterval(giftInterval);
+            isCascading = false;
         }
     </script>
 </body>
