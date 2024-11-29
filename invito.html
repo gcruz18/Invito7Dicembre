@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>🎄 Invito di Natale! 🎄</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1a472a, #2d5a4d);
+            font-family: 'Arial', sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            position: relative;
+            max-width: 95%;
+            margin: 1rem;
+        }
+
+        .super-secret-santa {
+            background: #ff4444;
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .super-secret-santa:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .super-secret-santa h2 {
+            margin: 0 0 0.5rem;
+            font-size: 1.8rem;
+        }
+
+        .super-secret-santa p {
+            font-size: 1rem;
+            margin-bottom: 0;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #ff4444;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .rsvp-button {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 1rem;
+            transition: transform 0.3s;
+        }
+
+        .rsvp-button:hover {
+            transform: scale(1.1);
+        }
+
+        #no-button {
+            position: relative;
+        }
+
+        .details {
+            font-size: 1rem;
+            margin: 1.5rem 0;
+            line-height: 1.4;
+        }
+
+        .gift {
+            position: fixed;
+            width: 25px;
+            height: 25px;
+            background: #ffd700;
+            border-radius: 5px;
+            animation: fall linear infinite;
+            z-index: 10;
+        }
+
+        @keyframes fall {
+            from {
+                transform: translateY(-10vh);
+            }
+            to {
+                transform: translateY(110vh);
+            }
+        }
+
+        /* Responsive styles */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .super-secret-santa {
+                padding: 1rem;
+            }
+
+            .super-secret-santa h2 {
+                font-size: 1.5rem;
+            }
+
+            .super-secret-santa p {
+                font-size: 0.9rem;
+            }
+
+            .rsvp-button {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .details {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="santa">🎅</div>
+        <h1>Ho Ho Ho!</h1>
+        <div class="details">
+            <p>Sei invitato alla festa di Natale più ptchh dell'anno!</p>
+            <p>🎄 7 Dicembre 2024 - Ore 12:30 🎄</p>
+            <p>🏠 Casa Basile - Via privata Sanremo, 10 🏠</p>
+            <p>Ci saranno: 
+                <br>🍷 Bevande festive
+                <br>🍪 Tanto cibo natalizio
+                <br>🎁 Scambio regali
+                <br>🃏 Giocata a carte
+            </p>
+        </div>
+
+        <!-- Super Secret Santa -->
+        <div class="super-secret-santa" onclick="startGiftCascade()">
+            <h2>🎁 Super Secret Santa 🎁</h2>
+            <p>Porta un regalo a tua scelta senza destinatario! Durante la festa, ogni partecipante sceglierà casualmente un pacco (non il proprio) per scoprire la sorpresa.</p>
+        </div>
+
+        <!-- RSVP Buttons -->
+        <button class="rsvp-button" onclick="redirect()">Ci sarò!</button>
+        <button id="no-button" class="rsvp-button" onmouseover="moveButton(this)">Non posso 😢</button>
+    </div>
+
+    <script>
+        // Reindirizzamento
+        function redirect() {
+            window.location.href = "https://example.com"; // Cambia con il tuo link
+        }
+
+        // Sposta il pulsante "No"
+        function moveButton(button) {
+            button.style.position = 'absolute';
+            button.style.left = Math.random() * (window.innerWidth - button.offsetWidth) + 'px';
+            button.style.top = Math.random() * (window.innerHeight - button.offsetHeight) + 'px';
+        }
+
+        // Cascata di regali con spegnimento
+        let giftInterval;
+        function startGiftCascade() {
+            const numGifts = 100;
+            let count = 0;
+
+            giftInterval = setInterval(() => {
+                if (count >= numGifts) {
+                    clearInterval(giftInterval); // Ferma la cascata dopo aver raggiunto il limite
+                    return;
+                }
+                const gift = document.createElement('div');
+                gift.className = 'gift';
+                gift.style.left = Math.random() * 100 + 'vw';
+                gift.style.animationDuration = Math.random() * 2 + 2 + 's';
+                gift.style.background = Math.random() > 0.5 ? '#ff4444' : '#ffd700';
+                document.body.appendChild(gift);
+
+                // Rimuovi il regalo dopo che cade
+                gift.addEventListener('animationend', () => {
+                    gift.remove();
+                });
+
+                count++;
+            }, 30); // Crea un regalo ogni 30ms
+
+            // Ferma la cascata dopo 5 secondi
+            setTimeout(() => {
+                clearInterval(giftInterval);
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
