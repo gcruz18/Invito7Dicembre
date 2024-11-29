@@ -106,7 +106,7 @@
             }
         }
 
-        /* Responsive styles */
+        /* Responsivo */
         @media (max-width: 600px) {
             h1 {
                 font-size: 1.8rem;
@@ -133,30 +133,37 @@
                 font-size: 0.9rem;
             }
         }
+
+        /* Aumento la dimensione di Santa */
+        .santa {
+            font-size: 5rem;  /* Aumentato da 2rem a 5rem */
+            animation: bounce 2s infinite;
+        }
+
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Intestazione principale -->
+        <div class="santa">🎅🏻</div>
+        <h1>Ho Ho Ho!</h1>
+        <div class="details">
+            <p>Sei invitato alla festa più natalizia dell'anno!</p>
+            <p>🎄 7 Dicembre 2024 - Ore 12:30 🎄</p>
+            <p>🏠 Casa Basile - Via privata Sanremo, 10 🏠</p>
+            <p>Ci saranno: 
+                <br>🍷 Bevande festive
+                <br>🍪 Tanto cibo natalizio
+                <br>🎁 Scambio regali
+                <br>🃏 Giocata a carte
+            </p>
+        </div>
+
         <!-- Sezione Super Secret Santa -->
         <div class="super-secret-santa-section" onclick="startGiftCascade()">
             <h2>🎁 Super Secret Santa 🎁</h2>
             <p>
                 Porta un regalo a tua scelta senza destinatario! Durante la festa, ogni partecipante sceglierà casualmente un pacco (non il proprio) per scoprire la sorpresa.
-            </p>
-        </div>
-
-        <!-- Intestazione principale -->
-        <div class="santa">🎅</div>
-        <h1>Ho Ho Ho!</h1>
-        <div class="details">
-            <p>Sei invitato alla festa di Natale più divertente dell'anno!</p>
-            <p>🎄 7 Dicembre 2024 - Ore 12:30 🎄</p>
-            <p>🏠 Casa Basile - Via privata Sanremo, 10 🏠</p>
-            <p>Ci saranno: 
-                <br>🍷 Bevande festive
-                <br>🍪 Biscotti di Natale
-                <br>🎁 Scambio regali
-                <br>🎵 Karaoke natalizio
             </p>
         </div>
 
@@ -168,7 +175,7 @@
     <script>
         // Reindirizzamento al tuo link Google Sheets
         function redirect() {
-            window.location.href = "https://docs.google.com/spreadsheets/d/1sUAcAY_VpcL6D2YJAzBhjAlNt88wfJaLSTurHUkzP7Q/edit?gid=0#gid=0";
+            window.location.href = "https://gossamer-sailfish-fd9.notion.site/14d1c7dc4e0b809c8d82e33ec408feb6?pvs=105";
         }
 
         // Sposta il pulsante "No"
